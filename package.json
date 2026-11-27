@@ -1,0 +1,1 @@
+{"name":"sigi-projects","version":"1.0.0","private":true,"type":"module","scripts":{"dev":"astro dev --host 0.0.0.0","build":"astro build","preview":"astro preview --host 0.0.0.0"},"dependencies":{"@tailwindcss/vite":"^4.0.0","astro":"^7.4.13","qrcode":"^1.5.4","tailwindcss":"^4.0.0"},"devDependencies":{"@types/qrcode":"^1.5.5"}}

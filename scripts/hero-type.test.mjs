@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { runInNewContext } from 'node:vm';
+const script = readFileSync(new URL('../public/hero-type.js', import.meta.url), 'utf8');
+function run(reduced = false) {
+  const tasks = new Map(); let next = 0, changed;
+  const lines = [0, 1].map(() => ({ active: false }));
+  lines.forEach(line => { line.classList = { add: () => line.active = true, remove: () => line.active = false }; });
+  const parts = ['Menos papel.', 'Más ', 'posibilidades.'].map((textContent, index) => ({ textContent, parentElement: lines[index === 0 ? 0 : 1] }));
+  const title = { querySelectorAll: selector => selector === '[data-type-text]' ? parts : lines.filter(line => line.active) };
+  const motion = { matches: reduced, addEventListener: (_, callback) => changed = callback };
+  runInNewContext(script, { document: { querySelector: () => title }, window: { matchMedia: () => motion }, setTimeout: callback => { tasks.set(++next, callback); return next; }, clearTimeout: id => tasks.delete(id) });
+  const tick = () => { const entry = tasks.entries().next().value; if (!entry) return; tasks.delete(entry[0]); entry[1](); };
+  return { parts, lines, tasks, tick, reduce: () => { motion.matches = true; changed({ matches: true }); } };
+}
+const animated = run();
+assert.equal(animated.parts.map(p => p.textContent).join(''), '');
+animated.tick();
+assert.equal(animated.parts[0].textContent, 'M');
+assert.equal(animated.lines[0].active, true);
+while (animated.tasks.size) animated.tick();
+assert.equal(animated.parts.map(p => p.textContent).join(''), 'Menos papel.Más posibilidades.');
+assert.equal(animated.lines.some(line => line.active), false);
+const interrupted = run(); interrupted.tick(); interrupted.reduce();
+assert.equal(interrupted.parts[0].textContent, 'Menos papel.');
+assert.equal(interrupted.tasks.size, 0);
+assert.equal(run(true).parts[0].textContent, 'Menos papel.');
+const css = readFileSync(new URL('../src/styles/global.css', import.meta.url), 'utf8');
+assert.ok(css.includes('h1 .type-line{display:block;'));
+console.log('OK: tipado letra por letra, texto final completo, salto de línea y movimiento reducido.');

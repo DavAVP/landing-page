@@ -1,0 +1,34 @@
+import { readFileSync } from 'node:fs';
+import { runInNewContext } from 'node:vm';
+import assert from 'node:assert/strict';
+const script = readFileSync(new URL('../public/theme.js', import.meta.url), 'utf8');
+function setup(saved, dark, blocked = false) {
+  const root = { dataset: {} };
+  const attrs = {};
+  let click, ready, change;
+  const button = { setAttribute: (key, value) => attrs[key] = value, addEventListener: (_, fn) => click = fn };
+  const media = { matches: dark, addEventListener: (_, fn) => change = fn };
+  const storage = { getItem: () => { if (blocked) throw Error(); return saved; }, setItem: (_, value) => { if (blocked) throw Error(); saved = value; } };
+  runInNewContext(script, { document: { documentElement: root, querySelectorAll: () => [button], addEventListener: (_, fn) => ready = fn }, window: { matchMedia: () => media }, localStorage: storage });
+  ready();
+  return { root, attrs, click: () => click(), change: value => change({ matches: value }), saved: () => saved };
+}
+const system = setup(null, true);
+assert.equal(system.root.dataset.theme, 'dark');
+system.change(false);
+assert.equal(system.root.dataset.theme, 'light');
+system.click();
+assert.equal(system.root.dataset.theme, 'dark');
+assert.equal(system.saved(), 'dark');
+assert.equal(system.attrs['aria-label'], 'Activar tema claro');
+system.change(false);
+assert.equal(system.root.dataset.theme, 'dark');
+assert.equal(setup('light', true).root.dataset.theme, 'light');
+const blocked = setup(null, false, true);
+blocked.click();
+assert.equal(blocked.root.dataset.theme, 'dark');
+const source = readFileSync(new URL('../src/data/projects.ts', import.meta.url), 'utf8');
+const path = source.match(/'([^']+\.apk)'/)[1];
+assert.equal(new URL(path, 'https://sigi-demo.vercel.app').origin, 'https://sigi-demo.vercel.app');
+assert.equal(new URL(path, 'http://localhost:4321').origin, 'http://localhost:4321');
+console.log('OK: temas, persistencia, preferencia del sistema, almacenamiento bloqueado y dominio del APK.');

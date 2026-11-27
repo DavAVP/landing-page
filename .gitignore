@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+.env
+
+# Instaladores: distribuir mediante Releases o almacenamiento externo.
+public/downloads/*.apk

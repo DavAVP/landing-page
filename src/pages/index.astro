@@ -1,0 +1,80 @@
+---
+import '../styles/global.css';
+import { projects } from '../data/projects';
+import QRCode from 'qrcode';
+import Icon from '../components/Icon.astro';
+const sigi = projects[0];
+const webQr = await QRCode.toDataURL(sigi.webUrl, { margin: 1, width: 240, color: { dark: '#102c48', light: '#ffffff' } });
+const appQr = Boolean(sigi.androidUrl);
+---
+<!doctype html>
+<html lang="es">
+<head><meta charset="UTF-8"/><script is:inline src="/theme.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="description" content="Explora SIGI, una aplicación móvil y web para gestionar inventario y préstamos de herramientas en la Facultad de Ingeniería Marítima de la ULEAM."/><meta name="theme-color" content="#f5f8fc"/><title>SIGI — Ideas que se convierten en herramientas</title><link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/></head>
+<body>
+<header class="shell flex items-center justify-between py-6"><a href="#" class="brand" aria-label="SIGI, inicio"><span class="brand-app-icon" aria-hidden="true"><span class="brand-mark"></span></span><span class="wordmark">SIGI<span>.</span></span><span class="brand-caption">PROJECTS</span></a><div class="header-actions"><button class="theme-toggle" type="button" aria-label="Activar tema oscuro" aria-pressed="false" data-theme-toggle><span class="theme-sun"><Icon name="sun"/></span><span class="theme-moon"><Icon name="moon"/></span></button><nav class="hidden sm:flex items-center gap-8 text-sm font-medium" aria-label="Principal"><a href="#proyectos">Proyectos</a><a href="#sistema">Acerca de SIGI</a><a class="nav-cta" href="#acceso">Explorar SIGI <span aria-hidden="true"><Icon name="plus"/></span></a></nav><a href="#acceso" class="sm:hidden nav-cta">Acceder</a></div></header>
+<main>
+<section class="hero shell">
+<div class="hero-copy"><div class="eyebrow"><span></span> IDEAS REALES. SOLUCIONES REALES.</div><h1 aria-label="Menos papel. Más posibilidades." data-typewriter><span class="type-line" aria-hidden="true"><span class="type-reserve">Menos papel.</span><span class="type-live"><span data-type-text>Menos papel.</span></span></span><span class="type-line" aria-hidden="true"><span class="type-reserve">Más <span class="accent">posibilidades.</span></span><span class="type-live"><span data-type-text>Más </span><span class="accent" data-type-text>posibilidades.</span></span></span></h1><p class="hero-description">Proyectos que conectan la tecnología con lo cotidiano. Explora SIGI: una nueva forma de gestionar herramientas, desde cualquier pantalla.</p><div class="flex flex-wrap gap-3"><a class="button primary" href="#proyectos">Conoce el proyecto <span aria-hidden="true"><Icon name="plus"/></span></a></div><div class="hero-note"><span class="tiny-icon"><Icon name="devices"/></span><span>Una misma experiencia.<br/><strong>En tu móvil y en la web.</strong></span></div></div>
+<div class="hero-visual" aria-label="Vista conceptual del inventario de SIGI"><div class="orb"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><span class="visual-tag tag-top">Hecho para conectar</span><div class="dashboard"><div class="dash-sidebar"><span class="mini-app-icon" aria-hidden="true"><span class="brand-mark"></span></span><span class="side-active"><Icon name="grid"/></span><span><Icon name="list"/></span><span><Icon name="clock"/></span><span><Icon name="settings"/></span></div><div class="dash-main"><div class="dash-top"><b>SIGI <small>/ Inventario</small></b><span class="avatar">S</span></div><div class="dash-heading"><div><small>TU ESPACIO DE TRABAJO</small><h3>Todo en su lugar.</h3></div><span class="demo-label">Vista ilustrativa</span></div><div class="dash-stats"><div><span>Inventario</span><b>Equipos</b><small>Organizados por unidad</small></div><div><span>Préstamos</span><b>En control</b><small>De inicio a devolución</small></div></div><div class="table-head"><b>Herramientas</b><span>Por ubicación <Icon name="chevron"/></span></div><div class="tool-row"><span class="tool-icon"><Icon name="tools"/></span><div><b>Herramientas de mano</b><small>Bloque B · Inventario</small></div><em>Disponibles</em></div><div class="tool-row"><span class="tool-icon"><Icon name="settings"/></span><div><b>Equipos de taller</b><small>Por unidad física</small></div><em>Consultar</em></div><div class="tool-row"><span class="tool-icon"><Icon name="box"/></span><div><b>Consumibles</b><small>Bloque A · Inventario</small></div><em>Consultar</em></div></div></div><div class="phone"><div class="phone-notch"></div><div class="phone-top"><b>SIGI<span>.</span></b><span><Icon name="menu"/></span></div><small>HOLA, EXPLORA TU INVENTARIO</small><h3>Tu próxima<br/>herramienta.</h3><div class="phone-search"><Icon name="search"/> Buscar herramientas</div><div class="phone-tool"><Icon name="tools"/></div><b>Herramientas de mano</b><p>Consulta, reserva y retira.</p><div class="phone-button">Consultar disponibilidad</div><div class="phone-nav"><Icon name="grid"/> <span><Icon name="search"/></span> <Icon name="clock"/></div></div><div class="floating-label"><span><Icon name="check"/></span><div>Todo conectado<small>Móvil + Web</small></div></div><span class="visual-tag tag-bottom">Diseñado para el mundo real</span></div>
+</section>
+<div class="platform-strip"><div class="shell flex flex-wrap items-center justify-between gap-5"><span>DEL AULA A LA VIDA REAL</span><div>Inventario <i>·</i> Reservas <i>·</i> Préstamos <i>·</i> ULEAM</div><span class="strip-end">Tecnología con propósito</span></div></div>
+<section id="proyectos" class="shell section"><div class="section-heading"><div><div class="eyebrow">EL PROYECTO DESTACADO</div><h2>Una idea. Dos formas de usarla.</h2></div><span class="section-caption">Construido para resolver algo real.</span></div>{projects.map(project => <article class="project-card"><div class="project-art"><div class="art-grid"></div><span class="art-caption">SISTEMA DE GESTIÓN DE INVENTARIO</span><div class="project-identity"><span class="project-app-icon" aria-hidden="true"><span class="brand-mark"></span></span><span class="wordmark">SIGI<span>.</span></span></div><div class="art-bottom"><span>Ingeniería Marítima<br/><b>ULEAM</b></span><span class="art-symbol"><Icon name="grid"/></span></div></div><div class="project-info"><span class="project-category">{project.category}</span><h3>{project.name}<span class="platform-pill">Móvil + Web</span></h3><p>El inventario de la facultad, ahora en tus manos. Un sistema para organizar equipos, reservar herramientas y dar seguimiento a cada préstamo.</p><div class="project-links"><a href="#acceso">Explorar y acceder <span aria-hidden="true"><Icon name="plus"/></span></a><a href="#sistema">Conocer el sistema</a></div></div></article>)}</section>
+<section id="sistema" class="shell section system-section"><div><div class="eyebrow">DEL CUADERNO A LO DIGITAL</div><h2>Cada herramienta<br/>tiene una historia.<br/><span class="muted">Ahora puedes seguirla.</span></h2><p class="section-description">SIGI nace para la Facultad de Ingeniería Marítima de la ULEAM: una alternativa al registro en papel, con información del inventario y del ciclo de préstamo en un mismo lugar.</p></div><div class="feature-list"><article><span class="feature-icon"><Icon name="grid"/></span><div><h3>Un inventario organizado</h3><p>Equipos, herramientas y consumibles por bloque y sección. Cada unidad con su propio código.</p></div></article><article><span class="feature-icon"><Icon name="clock"/></span><div><h3>Del préstamo a la devolución</h3><p>Consulta disponibilidad, reserva un horario y registra el retiro y la devolución de cada herramienta.</p></div></article><article><span class="feature-icon"><Icon name="bell"/></span><div><h3>La información, a tiempo</h3><p>Recordatorios y seguimiento para estudiantes, docentes y responsables del almacén.</p></div></article></div></section>
+<section id="acceso" class="access-section"><div class="shell">
+<div class="access-heading"><div class="eyebrow">ELIGE TU PANTALLA</div><h2>El mismo SIGI.<br/>Donde lo necesites.</h2><p>Accede desde el navegador o lleva el inventario contigo.</p></div>
+<div class="access-grid">
+<article class="access-card">
+<div class="access-title"><span class="feature-icon"><Icon name="monitor"/></span><span class="availability">Disponible</span></div>
+<div class="access-body"><div class="access-copy"><h3>Sin instalaciones.<br/>Directo a la web.</h3><p>Abre SIGI en tu navegador e inicia sesión para acceder al sistema.</p><a class="button primary" href={sigi.webUrl} target="_blank" rel="noopener noreferrer">Abrir SIGI web</a></div><div class="access-qr"><img src={webQr} alt="Código QR para abrir la versión web de SIGI" width="136" height="136" loading="lazy"/><span>Escanea y entra</span></div></div>
+</article>
+<article class="access-card mobile-card">
+<div class="access-title"><span class="feature-icon"><Icon name="phone"/></span><span class:list={['availability', {pending: !appQr}]}>{appQr ? 'Disponible' : 'Próximamente'}</span></div>
+<div class="access-body"><div class="access-copy"><h3>Tu inventario.<br/>En el bolsillo.</h3><p>Consulta disponibilidad y gestiona tus reservas desde tu dispositivo Android.</p>{appQr ? <a class="button primary" href={sigi.androidUrl} download="SIGI.apk">Descargar APK</a> : <span class="pending-button">Descarga por habilitar</span>}</div><div class="access-qr">{appQr ? <><img data-android-qr data-download-url={sigi.androidUrl} alt="Código QR para descargar SIGI para Android" width="136" height="136" hidden/><span>Escanea y descarga</span></> : <><div class="qr-pending" aria-hidden="true"><Icon name="phone"/></div><span>Próximamente</span></>}</div></div>
+</article>
+</div></div></section>
+</main><footer class="shell"><a class="brand" href="#"><span class="brand-app-icon" aria-hidden="true"><span class="brand-mark"></span></span><span class="wordmark">SIGI<span>.</span></span></a><p>Ideas que se convierten en herramientas.</p></footer>
+<script>
+import QRCode from 'qrcode';
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+if (!reducedMotion.matches && 'IntersectionObserver' in window) {
+  const elements = document.querySelectorAll<HTMLElement>(
+    '.platform-strip, .section-heading, .project-card, .system-section > div:first-child, .feature-list article, .access-heading, .access-card, footer'
+  );
+  const reveal = (element: HTMLElement) => {
+    element.classList.remove('reveal-pending');
+    observer.unobserve(element);
+  };
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) reveal(entry.target as HTMLElement);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -24px 0px' });
+  elements.forEach(element => {
+    // El contenido sigue visible si JavaScript o la API no están disponibles.
+    if (element.getBoundingClientRect().top < window.innerHeight * 0.9) return;
+    const siblings = Array.from(element.parentElement?.children || []);
+    const staggered = element.matches('.feature-list article, .access-card');
+    element.style.setProperty('--reveal-delay', staggered ? `${siblings.indexOf(element) * 90}ms` : '0ms');
+    element.classList.add('scroll-reveal', 'reveal-pending');
+    element.addEventListener('focusin', () => reveal(element));
+    observer.observe(element);
+  });
+  reducedMotion.addEventListener('change', event => {
+    if (event.matches) {
+      elements.forEach(element => element.classList.remove('reveal-pending'));
+      observer.disconnect();
+    }
+  });
+}
+const qrImage = document.querySelector<HTMLImageElement>('[data-android-qr]');
+if (qrImage?.dataset.downloadUrl) {
+  // El dominio real se conoce al abrir la landing; evita codificar localhost en producción.
+  const downloadUrl = new URL(qrImage.dataset.downloadUrl, window.location.origin).href;
+  QRCode.toDataURL(downloadUrl, { width: 240, margin: 2, color: { dark: '#142238', light: '#ffffff' } })
+    .then(src => { qrImage.src = src; qrImage.hidden = false; })
+    .catch(() => { qrImage.insertAdjacentText('afterend', 'Usa el botón para descargar la app.'); });
+}
+</script>
+<script is:inline src="/hero-type.js" defer></script>
+</body></html>
+
