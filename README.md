@@ -20,18 +20,19 @@ El resultado se genera en `dist/` y puede publicarse en Vercel, Netlify o cualqu
 
 ## Descarga Android
 
-Los APK se excluyen de Git por su tamaño. El archivo en `public/downloads/` se conserva para pruebas locales.
+El enlace se configura con `PUBLIC_SIGI_ANDROID_URL`.
 
-Para publicar la descarga:
-1. En GitHub abre Releases → Draft a new release.
-2. Crea una etiqueta, por ejemplo `v1.0.0`, adjunta el APK y publica la release.
-3. Copia el enlace público del archivo APK.
-4. En Vercel configura `PUBLIC_SIGI_ANDROID_URL` con ese enlace y vuelve a desplegar.
+- Local: copia `.env.example` a `.env` y coloca el enlace público al APK. Reinicia el servidor después de cambiarlo.
+- Vercel: agrega `PUBLIC_SIGI_ANDROID_URL` en Settings → Environment Variables, asigna el mismo enlace de `.env` y vuelve a desplegar.
 
-En desarrollo se usa el APK local como alternativa. En producción, si falta la URL, la tarjeta muestra Próximamente y no ofrece una descarga inexistente. El QR usa la URL configurada.
+El botón y el QR usan esa variable. Sin valor, la tarjeta muestra Próximamente. `.env` está excluido de Git; `.env.example` documenta la variable sin incluir el enlace.
 
-Para configurar la URL localmente, copia `.env.example` a `.env` y completa su valor.
+Los APK locales se excluyen de Git por su tamaño. No es necesario incluirlos en el despliegue.
 
 Para iOS se necesita un enlace de TestFlight o App Store. Expo Go sirve para desarrollo y no sustituye una distribución independiente.
 
 Las pantallas del hero son ilustraciones en HTML/CSS, identificadas como vistas ilustrativas. Reemplázalas por capturas reales cuando estén disponibles.
+
+## Acceso web
+
+Configura `PUBLIC_SIGI_WEB_URL` en `.env` con la dirección del frontend. En Vercel agrega la misma variable y vuelve a desplegar. El acceso y su QR usan este valor; sin él, la tarjeta muestra Próximamente.

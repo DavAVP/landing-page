@@ -28,7 +28,9 @@ const blocked = setup(null, false, true);
 blocked.click();
 assert.equal(blocked.root.dataset.theme, 'dark');
 const source = readFileSync(new URL('../src/data/projects.ts', import.meta.url), 'utf8');
-const path = source.match(/'([^']+\.apk)'/)[1];
-assert.equal(new URL(path, 'https://sigi-demo.vercel.app').origin, 'https://sigi-demo.vercel.app');
-assert.equal(new URL(path, 'http://localhost:4321').origin, 'http://localhost:4321');
-console.log('OK: temas, persistencia, preferencia del sistema, almacenamiento bloqueado y dominio del APK.');
+assert.ok(source.includes("androidUrl: import.meta.env.PUBLIC_SIGI_ANDROID_URL || ''"));
+assert.ok(!source.includes('releases/download/'));
+console.log('OK: temas, persistencia, preferencia del sistema y descarga configurada por entorno.');
+
+assert.ok(source.includes("webUrl: import.meta.env.PUBLIC_SIGI_WEB_URL || ''"));
+assert.ok(!source.includes('sigi-uleam-frontend.vercel.app'));

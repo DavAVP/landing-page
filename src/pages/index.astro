@@ -4,7 +4,7 @@ import { projects } from '../data/projects';
 import QRCode from 'qrcode';
 import Icon from '../components/Icon.astro';
 const sigi = projects[0];
-const webQr = await QRCode.toDataURL(sigi.webUrl, { margin: 1, width: 240, color: { dark: '#102c48', light: '#ffffff' } });
+const webQr = sigi.webUrl ? await QRCode.toDataURL(sigi.webUrl, { margin: 1, width: 240, color: { dark: '#102c48', light: '#ffffff' } }) : null;
 const appQr = Boolean(sigi.androidUrl);
 ---
 <!doctype html>
@@ -24,8 +24,8 @@ const appQr = Boolean(sigi.androidUrl);
 <div class="access-heading"><div class="eyebrow">ELIGE TU PANTALLA</div><h2>El mismo SIGI.<br/>Donde lo necesites.</h2><p>Accede desde el navegador o lleva el inventario contigo.</p></div>
 <div class="access-grid">
 <article class="access-card">
-<div class="access-title"><span class="feature-icon"><Icon name="monitor"/></span><span class="availability">Disponible</span></div>
-<div class="access-body"><div class="access-copy"><h3>Sin instalaciones.<br/>Directo a la web.</h3><p>Abre SIGI en tu navegador e inicia sesión para acceder al sistema.</p><a class="button primary" href={sigi.webUrl} target="_blank" rel="noopener noreferrer">Abrir SIGI web</a></div><div class="access-qr"><img src={webQr} alt="Código QR para abrir la versión web de SIGI" width="136" height="136" loading="lazy"/><span>Escanea y entra</span></div></div>
+<div class="access-title"><span class="feature-icon"><Icon name="monitor"/></span><span class:list={['availability', {pending: !webQr}]}>{webQr ? 'Disponible' : 'Próximamente'}</span></div>
+<div class="access-body"><div class="access-copy"><h3>Sin instalaciones.<br/>Directo a la web.</h3><p>Abre SIGI en tu navegador e inicia sesión para acceder al sistema.</p>{webQr ? <a class="button primary" href={sigi.webUrl} target="_blank" rel="noopener noreferrer">Abrir SIGI web</a> : <span class="pending-button">Acceso por habilitar</span>}</div><div class="access-qr">{webQr ? <><img src={webQr} alt="Código QR para abrir la versión web de SIGI" width="136" height="136" loading="lazy"/><span>Escanea y entra</span></> : <span>Próximamente</span>}</div></div>
 </article>
 <article class="access-card mobile-card">
 <div class="access-title"><span class="feature-icon"><Icon name="phone"/></span><span class:list={['availability', {pending: !appQr}]}>{appQr ? 'Disponible' : 'Próximamente'}</span></div>
